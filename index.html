@@ -67,7 +67,6 @@
     .product-price { font-size: 1.05rem; font-weight: 800; color: var(--secondary); }
     .btn-add-item { align-self: center; width: 38px; height: 38px; border-radius: 50%; background: var(--primary); color: white; border: none; display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; }
     
-    /* Quando a loja estiver fechada */
     body.is-closed .btn-add-item { background: #9ca3af; cursor: not-allowed; }
     body.is-closed .product-card { opacity: 0.85; }
 
@@ -139,7 +138,6 @@
     <div style="font-size: 1.15rem; font-weight: 800;" id="cartBarTotal">R$ 0,00 <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem; margin-left: 4px;"></i></div>
   </div>
 
-  <!-- MODAL PRODUTO -->
   <div class="modal-overlay" id="productModal">
     <div class="bottom-sheet">
       <div class="sheet-header">
@@ -168,7 +166,6 @@
     </div>
   </div>
 
-  <!-- MODAL CHECKOUT -->
   <div class="modal-overlay" id="cartModal">
     <div class="bottom-sheet">
       <div class="sheet-header">
@@ -316,13 +313,11 @@
 
     async function checkCloudStatus() {
       try {
-        // Usa timestamp na query string para furar a cache do Safari
-        const res = await fetch(CLOUD_URL + '?t=' + Date.now(), { cache: 'no-store' });
+        const res = await fetch(CLOUD_URL + '?nocache=' + Date.now(), { cache: 'no-store' });
         const data = await res.json();
         storeConfig.mode = data.mode || 'open';
         storeConfig.announcement = data.announcement || '';
       } catch (err) {
-        // Se falhar ou estiver sem net, tenta ler o que foi salvo localmente
         const local = localStorage.getItem('dogao_admin_config');
         if (local) {
           try {
