@@ -4,259 +4,129 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Admin - Dogão do Paulista</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
-    :root {
-      --primary: #0098a6;
-      --primary-dark: #007782;
-      --secondary: #ff5722;
-      --danger: #ef4444;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --bg: #0f172a;
-      --card: #1e293b;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --border: #334155;
-    }
+    :root { --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --muted: #94a3b8; --border: #334155; --primary: #0098a6; --danger: #ef4444; --success: #10b981; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background-color: var(--bg); color: var(--text); padding-bottom: 50px; }
-    
-    header {
-      background: #1e293b; border-bottom: 1px solid var(--border);
-      padding: 20px 16px; text-align: center;
-    }
-    h1 { font-family: 'Fredoka', cursive; font-size: 1.6rem; color: #38bdf8; }
-    p { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
-
-    .container { max-width: 600px; margin: 0 auto; padding: 16px; }
-
-    .card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 16px; padding: 18px; margin-bottom: 16px;
-    }
-    .card-title { font-size: 1rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: #fff; }
-
-    .mode-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    .mode-btn {
-      background: #0f172a; border: 2px solid var(--border); color: var(--muted);
-      border-radius: 12px; padding: 12px 6px; text-align: center; cursor: pointer;
-      font-size: 0.82rem; font-weight: 700; transition: all 0.2s;
-    }
-    .mode-btn.active.open { background: #064e3b; border-color: var(--success); color: #34d399; }
-    .mode-btn.active.closed { background: #7f1d1d; border-color: var(--danger); color: #f87171; }
-    .mode-btn.active.auto { background: #1e3a8a; border-color: #60a5fa; color: #93c5fd; }
-
-    .input-text {
-      width: 100%; background: #0f172a; border: 1px solid var(--border);
-      border-radius: 10px; color: white; padding: 12px; font-size: 0.9rem; outline: none;
-    }
-    .input-text:focus { border-color: #38bdf8; }
-
-    .day-row {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem;
-    }
-    .day-name { font-weight: 700; width: 75px; }
-    .day-inputs { display: flex; align-items: center; gap: 6px; }
-    .time-input {
-      background: #0f172a; border: 1px solid var(--border); color: white;
-      border-radius: 6px; padding: 4px 6px; font-size: 0.82rem; outline: none;
-    }
-
-    .item-toggle-row {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 10px 0; border-bottom: 1px solid var(--border);
-    }
-    .btn-toggle-stock {
-      padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800;
-      border: none; cursor: pointer;
-    }
-    .btn-toggle-stock.active { background: #064e3b; color: #34d399; }
-    .btn-toggle-stock.paused { background: #7f1d1d; color: #f87171; }
-
-    .btn-save-master {
-      background: #0284c7; color: white; border: none; width: 100%;
-      padding: 16px; border-radius: 14px; font-weight: 800; font-size: 1rem;
-      cursor: pointer; box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
-      margin-top: 10px;
-    }
-    .alert-saved {
-      display: none; background: #064e3b; color: #34d399; padding: 12px;
-      border-radius: 10px; text-align: center; font-weight: 700; margin-top: 12px;
-    }
+    body { background: var(--bg); color: var(--text); padding-bottom: 50px; }
+    header { background: #1e293b; border-bottom: 1px solid var(--border); padding: 18px 16px; text-align: center; }
+    h1 { font-family: 'Fredoka', cursive; font-size: 1.5rem; color: #38bdf8; }
+    .container { max-width: 500px; margin: 0 auto; padding: 16px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 14px; }
+    .card-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btn-status { padding: 16px; border-radius: 12px; border: 2px solid var(--border); font-size: 0.9rem; font-weight: 800; cursor: pointer; text-align: center; background: #0f172a; color: var(--muted); }
+    .btn-status.active-open { background: #064e3b; border-color: var(--success); color: #34d399; }
+    .btn-status.active-closed { background: #7f1d1d; border-color: var(--danger); color: #f87171; }
+    .input-text { width: 100%; background: #0f172a; border: 1px solid var(--border); border-radius: 10px; color: white; padding: 12px; font-size: 0.9rem; outline: none; }
+    .btn-save { background: #0284c7; color: white; border: none; width: 100%; padding: 16px; border-radius: 14px; font-weight: 800; font-size: 1rem; cursor: pointer; margin-top: 10px; }
+    .alert-saved { display: none; background: #064e3b; color: #34d399; padding: 12px; border-radius: 10px; text-align: center; font-weight: 700; margin-top: 12px; }
+    .loading { text-align: center; padding: 10px; color: #38bdf8; font-weight: 600; font-size: 0.85rem; }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>⚙️ Painel Administrador</h1>
-    <p>Dogão do Paulista - Gestão de Pedidos e Horários</p>
+    <h1>⚙️ Painel do Dono</h1>
+    <p style="font-size:0.8rem; color:var(--muted); margin-top:4px;">Dogão do Paulista</p>
   </header>
 
   <div class="container">
-    
-    <!-- ESTADO DA LOJA -->
+    <div id="loadingStatus" class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Conectando à nuvem...</div>
+
     <div class="card">
-      <div class="card-title"><i class="fa-solid fa-power-off"></i> Estado do Cardápio</div>
+      <div class="card-title"><i class="fa-solid fa-power-off"></i> Status do Cardápio</div>
       <div class="mode-grid">
-        <div class="mode-btn" id="mOpen" onclick="setMode('open')">
-          <i class="fa-solid fa-lock-open" style="font-size: 1.2rem; margin-bottom: 4px; display: block;"></i>
-          Aberto
-        </div>
-        <div class="mode-btn" id="mClosed" onclick="setMode('closed')">
-          <i class="fa-solid fa-lock" style="font-size: 1.2rem; margin-bottom: 4px; display: block;"></i>
-          Fechado
-        </div>
-        <div class="mode-btn" id="mAuto" onclick="setMode('auto')">
-          <i class="fa-solid fa-clock" style="font-size: 1.2rem; margin-bottom: 4px; display: block;"></i>
-          Horário Auto
-        </div>
+        <button type="button" class="btn-status" id="btnOpen" onclick="selectStatus('open')">
+          <i class="fa-solid fa-lock-open" style="font-size: 1.3rem; display: block; margin-bottom: 6px;"></i>
+          ABERTO
+        </button>
+        <button type="button" class="btn-status" id="btnClosed" onclick="selectStatus('closed')">
+          <i class="fa-solid fa-lock" style="font-size: 1.3rem; display: block; margin-bottom: 6px;"></i>
+          FECHADO
+        </button>
       </div>
     </div>
 
-    <!-- COMUNICADO / AVISO -->
     <div class="card">
-      <div class="card-title"><i class="fa-solid fa-bullhorn"></i> Aviso no Topo do Cardápio</div>
-      <input type="text" id="announcementInput" class="input-text" placeholder="Ex: Chuva forte, entregas com 15min de atraso...">
+      <div class="card-title"><i class="fa-solid fa-bullhorn"></i> Comunicado / Aviso aos Clientes</div>
+      <input type="text" id="announcementInput" class="input-text" placeholder="Ex: Hoje abriremos com 20 minutos de atraso...">
     </div>
 
-    <!-- HORÁRIOS AUTOMÁTICOS -->
-    <div class="card">
-      <div class="card-title"><i class="fa-regular fa-calendar-days"></i> Horários de Funcionamento (Modo Auto)</div>
-      <div id="scheduleContainer"></div>
-    </div>
-
-    <!-- PAUSAR ITENS / ESTOQUE -->
-    <div class="card">
-      <div class="card-title"><i class="fa-solid fa-boxes-stacked"></i> Estoque dos Itens (Pausar Lanches)</div>
-      <div id="stockListContainer"></div>
-    </div>
-
-    <!-- SALVAR -->
-    <button class="btn-save-master" onclick="saveAllSettings()">
-      💾 SALVAR E APLICAR NO CARDÁPIO
+    <button class="btn-save" id="btnSave" onclick="saveToCloud()">
+      <i class="fa-solid fa-cloud-arrow-up"></i> SALVAR ALTERAÇÃO NA NUVEM
     </button>
-    <div class="alert-saved" id="alertSaved">✅ Cardápio Atualizado com Sucesso!</div>
-
+    <div class="alert-saved" id="alertSaved">✅ Cardápio Atualizado na Nuvem!</div>
   </div>
 
   <script>
-    const DAYS_LABEL = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
-    
-    const ITEMS_LIST = [
-      { id: 1, name: "Dog Simples" }, { id: 2, name: "Dog Completo" }, { id: 3, name: "Dog Super" },
-      { id: 4, name: "Calabresa Simples" }, { id: 5, name: "Calabresa Completo" }, { id: 6, name: "Calabresa Super" },
-      { id: 7, name: "Frango Simples" }, { id: 8, name: "Frango Completo" }, { id: 9, name: "Frango Super" },
-      { id: 10, name: "Dog Kids" }, { id: 11, name: "Dog Misto" },
-      { id: 12, name: "Batata Simples" }, { id: 13, name: "Batata Completa" },
-      { id: 14, name: "Combo Simples Dog" }, { id: 15, name: "Combo Completo Dog" }, { id: 16, name: "Combo Super Dog" },
-      { id: 17, name: "Combo Simples Calabresa" }, { id: 18, name: "Combo Completo Calabresa" }, { id: 19, name: "Combo Super Calabresa" },
-      { id: 20, name: "Combo Misto" },
-      { id: 21, name: "Água Mineral 500ml" }, { id: 22, name: "Refrigerante Lata 350ml" }, { id: 23, name: "Refrigerante 1L" },
-      { id: 24, name: "Suco 450ml" }, { id: 25, name: "H2O" }
-    ];
+    // Nuvem pública via npoint para sincronizar instantaneamente o admin com os clientes
+    const CLOUD_URL = "https://api.npoint.io/4fa149ca71a62061266b";
+    let currentMode = "open";
 
-    let config = {
-      mode: 'open',
-      announcement: '',
-      pausedItems: {},
-      schedule: {
-        0: { enabled: true, open: "18:00", close: "23:59" },
-        1: { enabled: false, open: "18:00", close: "23:00" },
-        2: { enabled: true, open: "18:00", close: "23:00" },
-        3: { enabled: true, open: "18:00", close: "23:00" },
-        4: { enabled: true, open: "18:00", close: "23:00" },
-        5: { enabled: true, open: "18:00", close: "23:59" },
-        6: { enabled: true, open: "18:00", close: "23:59" }
+    async function fetchCloudStatus() {
+      try {
+        const res = await fetch(CLOUD_URL);
+        const data = await res.json();
+        currentMode = data.mode || "open";
+        document.getElementById('announcementInput').value = data.announcement || "";
+        updateUI();
+        document.getElementById('loadingStatus').style.display = "none";
+      } catch (e) {
+        document.getElementById('loadingStatus').innerText = "Modo offline local ativo";
       }
-    };
-
-    function loadConfig() {
-      const saved = localStorage.getItem('dogao_admin_config');
-      if (saved) {
-        try { config = Object.assign(config, JSON.parse(saved)); } catch(e){}
-      }
-      setMode(config.mode);
-      document.getElementById('announcementInput').value = config.announcement || '';
-      renderSchedule();
-      renderStock();
     }
 
-    function setMode(m) {
-      config.mode = m;
-      document.getElementById('mOpen').className = 'mode-btn open' + (m === 'open' ? ' active' : '');
-      document.getElementById('mClosed').className = 'mode-btn closed' + (m === 'closed' ? ' active' : '');
-      document.getElementById('mAuto').className = 'mode-btn auto' + (m === 'auto' ? ' active' : '');
+    function selectStatus(status) {
+      currentMode = status;
+      updateUI();
     }
 
-    function renderSchedule() {
-      const el = document.getElementById('scheduleContainer');
-      el.innerHTML = DAYS_LABEL.map((name, i) => {
-        const d = config.schedule[i] || { enabled: true, open: "18:00", close: "23:00" };
-        return `
-          <div class="day-row">
-            <label style="display:flex; align-items:center; gap:8px;">
-              <input type="checkbox" id="sch_en_${i}" ${d.enabled ? 'checked' : ''}>
-              <span class="day-name">${name}</span>
-            </label>
-            <div class="day-inputs">
-              <input type="time" class="time-input" id="sch_op_${i}" value="${d.open}">
-              <span>às</span>
-              <input type="time" class="time-input" id="sch_cl_${i}" value="${d.close}">
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function renderStock() {
-      const el = document.getElementById('stockListContainer');
-      el.innerHTML = ITEMS_LIST.map(item => {
-        const isPaused = !!config.pausedItems[item.id];
-        return `
-          <div class="item-toggle-row">
-            <span style="font-size:0.9rem; font-weight:600;">${item.name}</span>
-            <button class="btn-toggle-stock ${isPaused ? 'paused' : 'active'}" onclick="toggleItemStock(${item.id})">
-              ${isPaused ? '⛔ Esgotado' : '✅ Disponível'}
-            </button>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function toggleItemStock(id) {
-      if (config.pausedItems[id]) {
-        delete config.pausedItems[id];
+    function updateUI() {
+      const openBtn = document.getElementById('btnOpen');
+      const closedBtn = document.getElementById('btnClosed');
+      if (currentMode === 'open') {
+        openBtn.className = "btn-status active-open";
+        closedBtn.className = "btn-status";
       } else {
-        config.pausedItems[id] = true;
+        openBtn.className = "btn-status";
+        closedBtn.className = "btn-status active-closed";
       }
-      renderStock();
     }
 
-    function saveAllSettings() {
-      config.announcement = document.getElementById('announcementInput').value.trim();
-      
-      for (let i = 0; i < 7; i++) {
-        config.schedule[i] = {
-          enabled: document.getElementById(`sch_en_${i}`).checked,
-          open: document.getElementById(`sch_op_${i}`).value,
-          close: document.getElementById(`sch_cl_${i}`).value
-        };
+    async function saveToCloud() {
+      const saveBtn = document.getElementById('btnSave');
+      saveBtn.innerText = "Salvando...";
+      saveBtn.disabled = true;
+
+      const payload = {
+        mode: currentMode,
+        announcement: document.getElementById('announcementInput').value.trim()
+      };
+
+      try {
+        await fetch(CLOUD_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        // Salva backup local
+        localStorage.setItem('dogao_admin_config', JSON.stringify(payload));
+
+        const alertEl = document.getElementById('alertSaved');
+        alertEl.style.display = 'block';
+        setTimeout(() => { alertEl.style.display = 'none'; }, 2500);
+      } catch (err) {
+        alert('Erro ao sincronizar com a internet. Verifique sua conexão.');
+      } finally {
+        saveBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> SALVAR ALTERAÇÃO NA NUVEM';
+        saveBtn.disabled = false;
       }
-
-      localStorage.setItem('dogao_admin_config', JSON.stringify(config));
-
-      const alertEl = document.getElementById('alertSaved');
-      alertEl.style.display = 'block';
-      setTimeout(() => { alertEl.style.display = 'none'; }, 2500);
     }
 
-    loadConfig();
+    fetchCloudStatus();
   </script>
 </body>
 </html>
