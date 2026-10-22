@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Dogão do Paulista - Cardápio Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary: #0098a6;
+      --primary-dark: #007782;
+      --secondary: #ff5722;
+      --secondary-dark: #e64a19;
+      --accent: #ffb300;
+      --bg: #f4f8f9;
+      --card-bg: #ffffff;
+      --text-main: #1f2937;
+      --text-muted: #6b7280;
+      --whatsapp: #25d366;
+      --border: #e5e7eb;
+      --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background-color: var(--bg); color: var(--text-main); padding-bottom: 120px; }
+    header {
+      background: linear-gradient(135deg, #0098a6 0%, #00606b 100%);
+      color: white; padding: 24px 16px 20px; text-align: center;
+      border-bottom-left-radius: 24px; border-bottom-right-radius: 24px;
+      box-shadow: 0 6px 20px rgba(0, 152, 166, 0.25);
+    }
+    .badge-status {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255, 255, 255, 0.2); padding: 5px 14px;
+      border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 10px;
+    }
+    .badge-status.closed { background: #fee2e2; color: #991b1b; }
+    .pulse { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); animation: pulse 1.6s infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); } 70% { box-shadow: 0 0 0 8px rgba(74, 222, 128, 0); } 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); } }
+    h1.brand-title { font-family: 'Fredoka', cursive; font-size: 2.2rem; color: #fff; text-shadow: 2px 2px 0px var(--secondary); margin-bottom: 4px; }
+    p.brand-subtitle { font-size: 0.88rem; font-weight: 500; color: #e0f2fe; margin-bottom: 14px; }
+    .contact-bar { display: flex; justify-content: center; gap: 10px; }
+    .contact-btn { display: inline-flex; align-items: center; gap: 6px; background: white; color: var(--primary-dark); text-decoration: none; padding: 6px 14px; border-radius: 30px; font-size: 0.82rem; font-weight: 700; }
+    .banner-closed { display: none; margin: 14px 16px 0; background: #fee2e2; border: 1px solid #fecaca; color: #991b1b; padding: 12px 14px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; text-align: center; }
+    .banner-announcement { display: none; margin: 14px 16px 0; background: #fef3c7; border: 1px solid #fde68a; color: #92400e; padding: 10px 14px; border-radius: 12px; font-size: 0.85rem; font-weight: 600; text-align: center; }
+    .search-container { padding: 16px 16px 8px; }
+    .search-input-wrap { position: relative; }
+    .search-input-wrap i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+    .search-input { width: 100%; padding: 12px 14px 12px 40px; border-radius: 14px; border: 1px solid var(--border); background: white; font-size: 0.95rem; outline: none; }
+    .categories-bar { display: flex; gap: 8px; overflow-x: auto; padding: 8px 16px 16px; scrollbar-width: none; }
+    .categories-bar::-webkit-scrollbar { display: none; }
+    .cat-btn { white-space: nowrap; background: white; border: 1px solid var(--border); color: var(--text-main); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+    .cat-btn.active { background: var(--secondary); border-color: var(--secondary); color: white; }
+    .menu-section { padding: 0 16px 20px; }
+    .section-title { font-family: 'Fredoka', cursive; font-size: 1.3rem; color: var(--primary-dark); margin-bottom: 12px; }
+    .menu-grid { display: grid; gap: 12px; }
+    .product-card { background: var(--card-bg); border-radius: var(--radius); padding: 14px; display: flex; justify-content: space-between; gap: 12px; box-shadow: var(--shadow); border: 1px solid #f0f2f5; cursor: pointer; position: relative; }
+    .product-card.esgotado { opacity: 0.6; pointer-events: none; filter: grayscale(0.5); }
+    .product-card.esgotado::after { content: "ESGOTADO"; position: absolute; top: 12px; right: 12px; background: #ef4444; color: white; font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: 8px; }
+    .product-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .product-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.3; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .product-price { font-size: 1.05rem; font-weight: 800; color: var(--secondary); }
+    .btn-add-item { align-self: center; width: 38px; height: 38px; border-radius: 50%; background: var(--primary); color: white; border: none; display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; }
+    .floating-cart-bar { position: fixed; bottom: 16px; left: 16px; right: 16px; background: var(--primary-dark); color: white; border-radius: 18px; padding: 12px 18px; display: none; align-items: center; justify-content: space-between; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); z-index: 900; cursor: pointer; }
+    .cart-badge-count { background: var(--accent); color: var(--text-main); padding: 4px 10px; border-radius: 12px; font-weight: 800; }
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.5); z-index: 1000; display: none; align-items: flex-end; backdrop-filter: blur(3px); }
+    .modal-overlay.active { display: flex; }
+    .bottom-sheet { background: white; width: 100%; max-height: 90vh; border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 20px; overflow-y: auto; }
+    .sheet-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+    .sheet-title { font-size: 1.25rem; font-weight: 700; }
+    .btn-close { background: #f3f4f6; border: none; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; }
+    .field-group { margin-bottom: 14px; }
+    .field-label { font-size: 0.85rem; font-weight: 700; margin-bottom: 6px; display: block; }
+    .field-input, .field-textarea { width: 100%; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--border); font-size: 0.9rem; outline: none; }
+    .field-textarea { height: 60px; resize: none; }
+    .order-type-switch { display: flex; gap: 8px; background: #f3f4f6; padding: 4px; border-radius: 12px; margin-bottom: 14px; }
+    .order-type-btn { flex: 1; padding: 8px; text-align: center; font-size: 0.85rem; font-weight: 700; border-radius: 10px; cursor: pointer; border: none; background: transparent; }
+    .order-type-btn.active { background: white; color: var(--primary-dark); box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+    .payment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+    .pay-btn { border: 1px solid var(--border); background: white; padding: 10px 4px; border-radius: 12px; text-align: center; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+    .pay-btn.active { border-color: var(--primary); background: #e0f7fa; color: var(--primary-dark); }
+    .btn-wa-direct { background: var(--whatsapp); color: white; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 15px; border-radius: 14px; font-weight: 800; font-size: 1rem; margin-top: 10px; text-decoration: none; border: none; width: 100%; }
+    .btn-wa-direct.disabled { background: #9ca3af; pointer-events: none; }
+    .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f3f4f6; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge-status" id="storeStatusBadge">
+      <div class="pulse"></div>
+      <span id="storeStatusText">Aberto para Pedidos</span>
+    </div>
+    <h1 class="brand-title">Dogão do Paulista</h1>
+    <p class="brand-subtitle">Lanches prensados e super recheados 🌭✨</p>
+    <div class="contact-bar">
+      <a class="contact-btn" href="https://wa.me/5587988530881" target="_blank"><i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> (87) 98853-0881</a>
+      <a class="contact-btn" href="https://instagram.com/dogaodopaulista_" target="_blank"><i class="fa-brands fa-instagram" style="color: #e1306c;"></i> @dogaodopaulista_</a>
+    </div>
+  </header>
+
+  <div class="banner-closed" id="bannerClosed">
+    <i class="fa-solid fa-lock"></i> Estamos fechados no momento! O cardápio está em modo de visualização.
+  </div>
+
+  <div class="banner-announcement" id="bannerAnnouncement"></div>
+
+  <div class="search-container">
+    <div class="search-input-wrap">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="searchInput" class="search-input" placeholder="Pesquisar lanche, combo, bebida...">
+    </div>
+  </div>
+
+  <div class="categories-bar" id="categoriesBar"></div>
+  <div id="menuContainer"></div>
+
+  <div class="floating-cart-bar" id="floatingCart" onclick="openCartModal()">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span class="cart-badge-count" id="cartCount">0</span>
+      <div>
+        <div style="font-weight: 700; font-size: 0.95rem;">Ver Pedido</div>
+        <div style="font-size: 0.8rem; opacity: 0.9;" id="cartSubtotalText">0 itens</div>
+      </div>
+    </div>
+    <div style="font-size: 1.15rem; font-weight: 800;" id="cartBarTotal">R$ 0,00 <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem; margin-left: 4px;"></i></div>
+  </div>
+
+  <!-- MODAL ADICIONAR ITEM -->
+  <div class="modal-overlay" id="productModal">
+    <div class="bottom-sheet">
+      <div class="sheet-header">
+        <div>
+          <div class="sheet-title" id="modalProdTitle">Item</div>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;" id="modalProdDesc">Descrição</div>
+        </div>
+        <button class="btn-close" onclick="closeProductModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Observações</label>
+        <textarea id="modalProdObs" class="field-textarea" placeholder="Ex: Sem cebola, refrigerante sabor Guaraná..."></textarea>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: center; gap: 16px; margin: 16px 0;">
+        <button style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); font-size: 1.2rem; cursor: pointer; background: white;" onclick="changeModalQty(-1)">-</button>
+        <span style="font-size: 1.3rem; font-weight: 800;" id="modalProdQty">1</span>
+        <button style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); font-size: 1.2rem; cursor: pointer; background: white;" onclick="changeModalQty(1)">+</button>
+      </div>
+
+      <button style="background: var(--secondary); color: white; border: none; width: 100%; padding: 14px; border-radius: 14px; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between;" onclick="confirmAddToCart()">
+        <span>Adicionar</span>
+        <span id="modalProdTotalPrice">R$ 0,00</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL CARRINHO / WHATSAPP -->
+  <div class="modal-overlay" id="cartModal">
+    <div class="bottom-sheet">
+      <div class="sheet-header">
+        <div class="sheet-title">Finalizar Pedido</div>
+        <button class="btn-close" onclick="closeCartModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div id="cartItemsList" style="max-height: 160px; overflow-y: auto; margin-bottom: 12px;"></div>
+
+      <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.1rem; padding: 10px 0; border-top: 2px dashed #e5e7eb; margin-bottom: 12px;">
+        <span>Total dos Lanches:</span>
+        <span id="cartModalTotal" style="color: var(--secondary);">R$ 0,00</span>
+      </div>
+
+      <label class="field-label">Forma de Recebimento:</label>
+      <div class="order-type-switch">
+        <button class="order-type-btn active" id="btnTypeDelivery" onclick="setOrderType('delivery')">🛵 Entrega</button>
+        <button class="order-type-btn" id="btnTypePickup" onclick="setOrderType('pickup')">🏬 Retirada</button>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Seu Nome *</label>
+        <input type="text" id="clientName" class="field-input" placeholder="Ex: Maria Oliveira">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Seu WhatsApp / Telefone *</label>
+        <input type="tel" id="clientPhone" class="field-input" placeholder="Ex: (87) 99999-0000">
+      </div>
+
+      <div id="deliveryFields">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 8px;" class="field-group">
+          <div>
+            <label class="field-label">Rua / Logradouro *</label>
+            <input type="text" id="clientStreet" class="field-input" placeholder="Ex: Rua das Flores">
+          </div>
+          <div>
+            <label class="field-label">Número *</label>
+            <input type="text" id="clientNumber" class="field-input" placeholder="Ex: 123">
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;" class="field-group">
+          <div>
+            <label class="field-label">Bairro *</label>
+            <input type="text" id="clientBairro" class="field-input" placeholder="Ex: Centro">
+          </div>
+          <div>
+            <label class="field-label">Ponto de Referência</label>
+            <input type="text" id="clientRef" class="field-input" placeholder="Ex: Próximo à praça">
+          </div>
+        </div>
+      </div>
+
+      <label class="field-label">Forma de Pagamento:</label>
+      <div class="payment-grid">
+        <div class="pay-btn active" id="payPix" onclick="setPayment('PIX')">⚡ Pix</div>
+        <div class="pay-btn" id="payCard" onclick="setPayment('Cartão')">💳 Cartão</div>
+        <div class="pay-btn" id="payCash" onclick="setPayment('Dinheiro')">💵 Dinheiro</div>
+      </div>
+
+      <div class="field-group" id="changeField" style="display: none;">
+        <label class="field-label">Precisa de troco para quanto?</label>
+        <input type="text" id="clientChange" class="field-input" placeholder="Ex: R$ 50,00">
+      </div>
+
+      <a id="btnSendWhatsApp" class="btn-wa-direct" href="#" target="_top" onclick="handleSendClick(event)">
+        <i class="fa-brands fa-whatsapp" style="font-size: 1.3rem;"></i> 🟢 ENVIAR PEDIDO NO WHATSAPP AGORA
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const WHATSAPP_NUMBER = "5587988530881";
+    const MENU_DATA = [
+      {
+        category: "Dog Lanches",
+        items: [
+          { id: 1, name: "Dog Simples", desc: "Pão, salsicha, maionese, ketchup, mostarda, purê de batata, vinagrete e batata palha.", price: 17.00 },
+          { id: 2, name: "Dog Completo", desc: "Pão, salsicha, maionese, ketchup, mostarda, purê de batata, vinagrete, milho, ervilha, cheddar, catupiry e batata palha.", price: 19.00 },
+          { id: 3, name: "Dog Super", desc: "Pão, salsicha, maionese, ketchup, mostarda, purê de batata, vinagrete, milho, ervilha, cheddar, catupiry e batata palha. (TUDO EM DOBRO)", price: 23.00 }
+        ]
+      },
+      {
+        category: "Calabresa",
+        items: [
+          { id: 4, name: "Calabresa Simples", desc: "Pão, linguiça toscana, maionese, vinagrete e ketchup.", price: 19.00 },
+          { id: 5, name: "Calabresa Completo", desc: "Pão, linguiça toscana, maionese, vinagrete, ketchup, cheddar e catupiry.", price: 21.00 },
+          { id: 6, name: "Calabresa Super", desc: "Pão, linguiça toscana, maionese, vinagrete, ketchup, cheddar e catupiry. (TUDO EM DOBRO)", price: 25.00 }
+        ]
+      },
+      {
+        category: "Calabresa de Frango",
+        items: [
+          { id: 7, name: "Frango Simples", desc: "Pão, linguiça toscana de frango, maionese, vinagrete e ketchup.", price: 19.00 },
+          { id: 8, name: "Frango Completo", desc: "Pão, linguiça toscana de frango, maionese, vinagrete, ketchup, cheddar e catupiry.", price: 21.00 },
+          { id: 9, name: "Frango Super", desc: "Pão, linguiça toscana de frango, maionese, vinagrete, ketchup, cheddar e catupiry. (TUDO EM DOBRO)", price: 25.00 }
+        ]
+      },
+      {
+        category: "Especiais & Kids",
+        items: [
+          { id: 10, name: "Dog Kids", desc: "Pão, salsicha, maionese, ketchup, mostarda e batata palha.", price: 11.00 },
+          { id: 11, name: "Dog Misto", desc: "Pão, salsicha, linguiça toscana, maionese, ketchup, mostarda, purê de batata, vinagrete, milho, ervilha, cheddar, catupiry e batata palha.", price: 23.00 }
+        ]
+      },
+      {
+        category: "Batata Frita",
+        items: [
+          { id: 12, name: "Batata Simples", desc: "Só batata frita super crocante.", price: 14.00 },
+          { id: 13, name: "Batata Completa", desc: "Batata com catupiry e cheddar cremoso.", price: 16.00 }
+        ]
+      },
+      {
+        category: "Combos",
+        items: [
+          { id: 14, name: "Combo Simples Dog", desc: "Dog simples, batata simples, refrigerante lata ou suco.", price: 35.00 },
+          { id: 15, name: "Combo Completo Dog", desc: "Dog completo, batata com cheddar e catupiry, refrigerante lata ou suco.", price: 39.00 },
+          { id: 16, name: "Combo Super Dog", desc: "Dog super, batata com cheddar e catupiry, refrigerante lata ou suco.", price: 43.00 },
+          { id: 17, name: "Combo Simples Calabresa", desc: "Calabresa simples, batata simples, refrigerante lata ou suco.", price: 37.00 },
+          { id: 18, name: "Combo Completo Calabresa", desc: "Calabresa completo, batata com cheddar e catupiry, refrigerante lata ou suco.", price: 41.00 },
+          { id: 19, name: "Combo Super Calabresa", desc: "Calabresa super, batata com cheddar e catupiry, refrigerante lata ou suco.", price: 45.00 },
+          { id: 20, name: "Combo Misto", desc: "Dog misto, batata com cheddar e catupiry, refrigerante lata ou suco.", price: 43.00 }
+        ]
+      },
+      {
+        category: "Bebidas",
+        items: [
+          { id: 21, name: "Água Mineral 500ml", desc: "Sem gás / Com gás bem gelada.", price: 3.00 },
+          { id: 22, name: "Refrigerante Lata 350ml", desc: "Coca-cola, Guaraná, etc.", price: 7.00 },
+          { id: 23, name: "Refrigerante 1L", desc: "Garrafa família bem gelada.", price: 10.00 },
+          { id: 24, name: "Suco 450ml", desc: "Suco natural e refrescante.", price: 7.00 },
+          { id: 25, name: "H2O", desc: "Garrafa H2OH! bem gelada.", price: 8.00 }
+        ]
+      }
+    ];
+
+    let storeConfig = {
+      mode: 'open', // 'open', 'closed', 'auto'
+      announcement: '',
+      pausedItems: {},
+      schedule: {
+        0: { enabled: true, open: "18:00", close: "23:59" },
+        1: { enabled: false, open: "18:00", close: "23:00" },
+        2: { enabled: true, open: "18:00", close: "23:00" },
+        3: { enabled: true, open: "18:00", close: "23:00" },
+        4: { enabled: true, open: "18:00", close: "23:00" },
+        5: { enabled: true, open: "18:00", close: "23:59" },
+        6: { enabled: true, open: "18:00", close: "23:59" }
+      }
+    };
+
+    let cart = [];
+    let currentItem = null;
+    let currentQty = 1;
+    let selectedOrderType = 'delivery';
+    let selectedPayment = 'PIX';
+
+    // Sincronização LocalStorage (permite testar ou sincronizar com a app de admin)
+    function loadAdminSettings() {
+      const saved = localStorage.getItem('dogao_admin_config');
+      if (saved) {
+        try { storeConfig = JSON.parse(saved); } catch(e){}
+      }
+      applyStoreStatus();
+    }
+
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'dogao_admin_config') {
+        loadAdminSettings();
+      }
+    });
+
+    function isStoreCurrentlyOpen() {
+      if (storeConfig.mode === 'open') return true;
+      if (storeConfig.mode === 'closed') return false;
+      const now = new Date();
+      const day = now.getDay();
+      const sch = storeConfig.schedule[day];
+      if (!sch || !sch.enabled) return false;
+      const curM = now.getHours() * 60 + now.getMinutes();
+      const [oh, om] = sch.open.split(':').map(Number);
+      const [ch, cm] = sch.close.split(':').map(Number);
+      const oM = oh * 60 + om;
+      const cM = ch * 60 + cm;
+      if (cM < oM) return (curM >= oM || curM <= cM);
+      return (curM >= oM && curM <= cM);
+    }
+
+    function applyStoreStatus() {
+      const isOpen = isStoreCurrentlyOpen();
+      const badge = document.getElementById('storeStatusBadge');
+      const badgeText = document.getElementById('storeStatusText');
+      const bannerClosed = document.getElementById('bannerClosed');
+      const bannerAnnounce = document.getElementById('bannerAnnouncement');
+
+      if (isOpen) {
+        badge.className = 'badge-status';
+        badgeText.innerText = 'Aberto para Pedidos';
+        bannerClosed.style.display = 'none';
+      } else {
+        badge.className = 'badge-status closed';
+        badgeText.innerText = 'Fechado no Momento';
+        bannerClosed.style.display = 'block';
+      }
+
+      if (storeConfig.announcement && storeConfig.announcement.trim()) {
+        bannerAnnounce.style.display = 'block';
+        bannerAnnounce.innerHTML = `📢 <b>Aviso:</b> ${storeConfig.announcement}`;
+      } else {
+        bannerAnnounce.style.display = 'none';
+      }
+
+      renderItems(MENU_DATA);
+    }
+
+    function initMenu() {
+      const catBar = document.getElementById('categoriesBar');
+      catBar.innerHTML = `<button class="cat-btn active" onclick="filterCategory('all', this)"><i class="fa-solid fa-border-all"></i> Todos</button>` +
+        MENU_DATA.map(c => `<button class="cat-btn" onclick="filterCategory('${c.category}', this)">${c.category}</button>`).join('');
+      loadAdminSettings();
+    }
+
+    function renderItems(data) {
+      const container = document.getElementById('menuContainer');
+      container.innerHTML = data.map(section => `
+        <div class="menu-section" data-cat="${section.category}">
+          <h2 class="section-title">🌭 ${section.category}</h2>
+          <div class="menu-grid">
+            ${section.items.map(item => {
+              const isPaused = storeConfig.pausedItems && storeConfig.pausedItems[item.id];
+              return `
+                <div class="product-card ${isPaused ? 'esgotado' : ''}" onclick="openProductModal(${item.id})">
+                  <div>
+                    <h3 class="product-title">${item.name}</h3>
+                    <p class="product-desc">${item.desc}</p>
+                    <span class="product-price">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+                  </div>
+                  <button class="btn-add-item" onclick="event.stopPropagation(); openProductModal(${item.id})">
+                    <i class="fa-solid fa-plus"></i>
+                  </button>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterCategory(cat, element) {
+      document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+      element.classList.add('active');
+      document.querySelectorAll('.menu-section').forEach(sec => {
+        sec.style.display = (cat === 'all' || sec.getAttribute('data-cat') === cat) ? 'block' : 'none';
+      });
+    }
+
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+      const q = e.target.value.toLowerCase();
+      if (!q) { renderItems(MENU_DATA); return; }
+      const filtered = MENU_DATA.map(sec => ({
+        category: sec.category,
+        items: sec.items.filter(i => i.name.toLowerCase().includes(q) || i.desc.toLowerCase().includes(q))
+      })).filter(sec => sec.items.length > 0);
+      renderItems(filtered);
+    });
+
+    function openProductModal(id) {
+      if (!isStoreCurrentlyOpen()) {
+        alert('O estabelecimento está fechado no momento para novos pedidos.');
+        return;
+      }
+      if (storeConfig.pausedItems && storeConfig.pausedItems[id]) {
+        alert('Este item está temporariamente esgotado!');
+        return;
+      }
+      let found = null;
+      for (const c of MENU_DATA) {
+        found = c.items.find(i => i.id === id);
+        if (found) break;
+      }
+      if (!found) return;
+      currentItem = found;
+      currentQty = 1;
+      document.getElementById('modalProdTitle').innerText = found.name;
+      document.getElementById('modalProdDesc').innerText = found.desc;
+      document.getElementById('modalProdObs').value = '';
+      updateModalPrice();
+      document.getElementById('productModal').classList.add('active');
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').classList.remove('active');
+    }
+
+    function changeModalQty(delta) {
+      currentQty = Math.max(1, currentQty + delta);
+      updateModalPrice();
+    }
+
+    function updateModalPrice() {
+      document.getElementById('modalProdQty').innerText = currentQty;
+      const total = currentItem.price * currentQty;
+      document.getElementById('modalProdTotalPrice').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    }
+
+    function confirmAddToCart() {
+      const obs = document.getElementById('modalProdObs').value.trim();
+      cart.push({ id: currentItem.id, name: currentItem.name, price: currentItem.price, qty: currentQty, obs });
+      closeProductModal();
+      updateCartFloatingBar();
+    }
+
+    function updateCartFloatingBar() {
+      const bar = document.getElementById('floatingCart');
+      if (cart.length === 0) { bar.style.display = 'none'; return; }
+      bar.style.display = 'flex';
+      const totalCount = cart.reduce((acc, item) => acc + item.qty, 0);
+      const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+      document.getElementById('cartCount').innerText = totalCount;
+      document.getElementById('cartSubtotalText').innerText = `${totalCount} item(ns)`;
+      document.getElementById('cartBarTotal').innerHTML = `R$ ${totalPrice.toFixed(2).replace('.', ',')} <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem; margin-left: 4px;"></i>`;
+    }
+
+    function openCartModal() {
+      renderCartItems();
+      document.getElementById('cartModal').classList.add('active');
+    }
+
+    function closeCartModal() {
+      document.getElementById('cartModal').classList.remove('active');
+    }
+
+    function renderCartItems() {
+      const container = document.getElementById('cartItemsList');
+      if (cart.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 16px;">Carrinho vazio.</p>';
+        document.getElementById('cartModalTotal').innerText = 'R$ 0,00';
+        return;
+      }
+      let total = 0;
+      container.innerHTML = cart.map((item, index) => {
+        const itemTotal = item.price * item.qty;
+        total += itemTotal;
+        return `
+          <div class="cart-item-row">
+            <div>
+              <div style="font-size: 0.9rem; font-weight: 700;">${item.qty}x ${item.name}</div>
+              ${item.obs ? `<div style="font-size: 0.75rem; color: var(--text-muted);">↳ Obs: ${item.obs}</div>` : ''}
+              <div style="font-size: 0.8rem; font-weight: 700; color: var(--secondary);">R$ ${itemTotal.toFixed(2).replace('.', ',')}</div>
+            </div>
+            <button onclick="removeCartItem(${index})" style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer;"><i class="fa-regular fa-trash-can"></i></button>
+          </div>
+        `;
+      }).join('');
+      document.getElementById('cartModalTotal').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    }
+
+    function removeCartItem(index) {
+      cart.splice(index, 1);
+      renderCartItems();
+      updateCartFloatingBar();
+      if (cart.length === 0) closeCartModal();
+    }
+
+    function setOrderType(type) {
+      selectedOrderType = type;
+      document.getElementById('btnTypeDelivery').classList.toggle('active', type === 'delivery');
+      document.getElementById('btnTypePickup').classList.toggle('active', type === 'pickup');
+      document.getElementById('deliveryFields').style.display = type === 'delivery' ? 'block' : 'none';
+    }
+
+    function setPayment(pay) {
+      selectedPayment = pay;
+      document.querySelectorAll('.pay-btn').forEach(btn => btn.classList.remove('active'));
+      if (pay === 'PIX') document.getElementById('payPix').classList.add('active');
+      if (pay === 'Cartão') document.getElementById('payCard').classList.add('active');
+      if (pay === 'Dinheiro') {
+        document.getElementById('payCash').classList.add('active');
+        document.getElementById('changeField').style.display = 'block';
+      } else {
+        document.getElementById('changeField').style.display = 'none';
+      }
+    }
+
+    function buildCleanWhatsAppMessage() {
+      const name = document.getElementById('clientName').value.trim();
+      const phone = document.getElementById('clientPhone').value.trim();
+      const street = document.getElementById('clientStreet').value.trim();
+      const num = document.getElementById('clientNumber').value.trim();
+      const bairro = document.getElementById('clientBairro').value.trim();
+      const ref = document.getElementById('clientRef').value.trim();
+      const troco = document.getElementById('clientChange').value.trim();
+
+      if (!name) { alert('Por favor, informe seu Nome.'); return null; }
+      if (!phone) { alert('Por favor, informe seu WhatsApp/Telefone.'); return null; }
+      if (selectedOrderType === 'delivery' && (!street || !num || !bairro)) {
+        alert('Por favor, preencha Rua, Número e Bairro para entrega.');
+        return null;
+      }
+
+      let total = 0;
+      let msg = `*NOVO PEDIDO - DOGÃO DO PAULISTA*\n\n`;
+      msg += `👤 *Cliente:* ${name}\n`;
+      msg += `📱 *Contato:* ${phone}\n`;
+      msg += `🛵 *Tipo:* ${selectedOrderType === 'delivery' ? 'Entrega (Delivery)' : 'Retirada no Balcão'}\n`;
+
+      if (selectedOrderType === 'delivery') {
+        msg += `📍 *Endereço:* ${street}, Nº ${num}\n`;
+        msg += `🏘️ *Bairro:* ${bairro}\n`;
+        if (ref) msg += `📌 *Ponto de Ref:* ${ref}\n`;
+      }
+
+      msg += `\n📋 *ITENS ESCOLHIDOS:*\n`;
+      cart.forEach(item => {
+        const itemTot = item.price * item.qty;
+        total += itemTot;
+        msg += `• ${item.qty}x ${item.name} - R$ ${itemTot.toFixed(2).replace('.', ',')}\n`;
+        if (item.obs) msg += `  ↳ Obs: ${item.obs}\n`;
+      });
+
+      msg += `\n💰 *Total dos Lanches:* R$ ${total.toFixed(2).replace('.', ',')}\n`;
+      if (selectedOrderType === 'delivery') {
+        msg += `🛵 *Taxa de Entrega:* (A combinar no WhatsApp)\n`;
+      }
+      msg += `💳 *Pagamento:* ${selectedPayment}`;
+      if (selectedPayment === 'Dinheiro' && troco) {
+        msg += ` (Troco para ${troco})`;
+      }
+
+      return msg;
+    }
+
+    function handleSendClick(e) {
+      if (!isStoreCurrentlyOpen()) {
+        e.preventDefault();
+        alert('O estabelecimento está fechado no momento para novos pedidos.');
+        return false;
+      }
+      const text = buildCleanWhatsAppMessage();
+      if (!text) {
+        e.preventDefault();
+        return false;
+      }
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+      document.getElementById('btnSendWhatsApp').setAttribute('href', url);
+      return true;
+    }
+
+    initMenu();
+  </script>
+</body>
+</html>
