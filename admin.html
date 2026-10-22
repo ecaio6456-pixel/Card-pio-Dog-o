@@ -4,12 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Admin - Dogão do Paulista</title>
+  
+  <!-- Configurações para Web App na Tela de Início do iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Admin Dogão">
+  
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
     :root { --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --muted: #94a3b8; --border: #334155; --primary: #0098a6; --danger: #ef4444; --success: #10b981; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background: var(--bg); color: var(--text); padding-bottom: 50px; }
+    body { background: var(--bg); color: var(--text); padding-bottom: 50px; padding-top: env(safe-area-inset-top); }
     header { background: #1e293b; border-bottom: 1px solid var(--border); padding: 18px 16px; text-align: center; }
     h1 { font-family: 'Fredoka', cursive; font-size: 1.5rem; color: #38bdf8; }
     .container { max-width: 500px; margin: 0 auto; padding: 16px; }
@@ -33,7 +40,7 @@
   </header>
 
   <div class="container">
-    <div id="loadingStatus" class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Conectando à nuvem...</div>
+    <div id="loadingStatus" class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Sincronizando com a nuvem...</div>
 
     <div class="card">
       <div class="card-title"><i class="fa-solid fa-power-off"></i> Status do Cardápio</div>
@@ -50,31 +57,33 @@
     </div>
 
     <div class="card">
-      <div class="card-title"><i class="fa-solid fa-bullhorn"></i> Comunicado / Aviso aos Clientes</div>
-      <input type="text" id="announcementInput" class="input-text" placeholder="Ex: Hoje abriremos com 20 minutos de atraso...">
+      <div class="card-title"><i class="fa-solid fa-bullhorn"></i> Comunicado aos Clientes</div>
+      <input type="text" id="announcementInput" class="input-text" placeholder="Ex: Hoje abriremos com atraso...">
     </div>
 
     <button class="btn-save" id="btnSave" onclick="saveToCloud()">
-      <i class="fa-solid fa-cloud-arrow-up"></i> SALVAR ALTERAÇÃO NA NUVEM
+      <i class="fa-solid fa-cloud-arrow-up"></i> SALVAR NA NUVEM
     </button>
     <div class="alert-saved" id="alertSaved">✅ Cardápio Atualizado na Nuvem!</div>
   </div>
 
   <script>
-    // Nuvem pública via npoint para sincronizar instantaneamente o admin com os clientes
     const CLOUD_URL = "https://api.npoint.io/4fa149ca71a62061266b";
     let currentMode = "open";
 
     async function fetchCloudStatus() {
       try {
-        const res = await fetch(CLOUD_URL);
+        const res = await fetch(CLOUD_URL + "?nocache=" + new Date().getTime(), {
+          method: "GET",
+          headers: { "Cache-Control": "no-cache", "Pragma": "no-cache" }
+        });
         const data = await res.json();
         currentMode = data.mode || "open";
         document.getElementById('announcementInput').value = data.announcement || "";
         updateUI();
         document.getElementById('loadingStatus').style.display = "none";
       } catch (e) {
-        document.getElementById('loadingStatus').innerText = "Modo offline local ativo";
+        document.getElementById('loadingStatus').innerText = "Status carregado em modo seguro";
       }
     }
 
@@ -112,16 +121,13 @@
           body: JSON.stringify(payload)
         });
 
-        // Salva backup local
-        localStorage.setItem('dogao_admin_config', JSON.stringify(payload));
-
         const alertEl = document.getElementById('alertSaved');
         alertEl.style.display = 'block';
         setTimeout(() => { alertEl.style.display = 'none'; }, 2500);
       } catch (err) {
-        alert('Erro ao sincronizar com a internet. Verifique sua conexão.');
+        alert('Não foi possível sincronizar agora. Verifique sua conexão.');
       } finally {
-        saveBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> SALVAR ALTERAÇÃO NA NUVEM';
+        saveBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> SALVAR NA NUVEM';
         saveBtn.disabled = false;
       }
     }
