@@ -14,7 +14,6 @@
       --primary: #0098a6;
       --primary-dark: #007782;
       --secondary: #ff5722;
-      --secondary-dark: #e64a19;
       --accent: #ffb300;
       --bg: #f4f8f9;
       --card-bg: #ffffff;
@@ -45,28 +44,32 @@
     p.brand-subtitle { font-size: 0.88rem; font-weight: 500; color: #e0f2fe; margin-bottom: 14px; }
     .contact-bar { display: flex; justify-content: center; gap: 10px; }
     .contact-btn { display: inline-flex; align-items: center; gap: 6px; background: white; color: var(--primary-dark); text-decoration: none; padding: 6px 14px; border-radius: 30px; font-size: 0.82rem; font-weight: 700; }
+    
     .banner-closed { display: none; margin: 14px 16px 0; background: #fee2e2; border: 1px solid #fecaca; color: #991b1b; padding: 12px 14px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; text-align: center; }
     .banner-announcement { display: none; margin: 14px 16px 0; background: #fef3c7; border: 1px solid #fde68a; color: #92400e; padding: 10px 14px; border-radius: 12px; font-size: 0.85rem; font-weight: 600; text-align: center; }
+    
     .search-container { padding: 16px 16px 8px; }
     .search-input-wrap { position: relative; }
     .search-input-wrap i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
     .search-input { width: 100%; padding: 12px 14px 12px 40px; border-radius: 14px; border: 1px solid var(--border); background: white; font-size: 0.95rem; outline: none; }
+    
     .categories-bar { display: flex; gap: 8px; overflow-x: auto; padding: 8px 16px 16px; scrollbar-width: none; }
     .categories-bar::-webkit-scrollbar { display: none; }
     .cat-btn { white-space: nowrap; background: white; border: 1px solid var(--border); color: var(--text-main); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
     .cat-btn.active { background: var(--secondary); border-color: var(--secondary); color: white; }
+    
     .menu-section { padding: 0 16px 20px; }
     .section-title { font-family: 'Fredoka', cursive; font-size: 1.3rem; color: var(--primary-dark); margin-bottom: 12px; }
     .menu-grid { display: grid; gap: 12px; }
-    .product-card { background: var(--card-bg); border-radius: var(--radius); padding: 14px; display: flex; justify-content: space-between; gap: 12px; box-shadow: var(--shadow); border: 1px solid #f0f2f5; cursor: pointer; position: relative; }
-    .product-card.esgotado { opacity: 0.6; pointer-events: none; filter: grayscale(0.5); }
-    .product-card.esgotado::after { content: "ESGOTADO"; position: absolute; top: 12px; right: 12px; background: #ef4444; color: white; font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: 8px; }
+    .product-card { background: var(--card-bg); border-radius: var(--radius); padding: 14px; display: flex; justify-content: space-between; gap: 12px; box-shadow: var(--shadow); border: 1px solid #f0f2f5; cursor: pointer; }
     .product-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
-    .product-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.3; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .product-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.3; margin-bottom: 8px; }
     .product-price { font-size: 1.05rem; font-weight: 800; color: var(--secondary); }
     .btn-add-item { align-self: center; width: 38px; height: 38px; border-radius: 50%; background: var(--primary); color: white; border: none; display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; }
+    
     .floating-cart-bar { position: fixed; bottom: 16px; left: 16px; right: 16px; background: var(--primary-dark); color: white; border-radius: 18px; padding: 12px 18px; display: none; align-items: center; justify-content: space-between; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); z-index: 900; cursor: pointer; }
     .cart-badge-count { background: var(--accent); color: var(--text-main); padding: 4px 10px; border-radius: 12px; font-weight: 800; }
+
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.5); z-index: 1000; display: none; align-items: flex-end; backdrop-filter: blur(3px); }
     .modal-overlay.active { display: flex; }
     .bottom-sheet { background: white; width: 100%; max-height: 90vh; border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 20px; overflow-y: auto; }
@@ -77,14 +80,16 @@
     .field-label { font-size: 0.85rem; font-weight: 700; margin-bottom: 6px; display: block; }
     .field-input, .field-textarea { width: 100%; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--border); font-size: 0.9rem; outline: none; }
     .field-textarea { height: 60px; resize: none; }
+    
     .order-type-switch { display: flex; gap: 8px; background: #f3f4f6; padding: 4px; border-radius: 12px; margin-bottom: 14px; }
     .order-type-btn { flex: 1; padding: 8px; text-align: center; font-size: 0.85rem; font-weight: 700; border-radius: 10px; cursor: pointer; border: none; background: transparent; }
     .order-type-btn.active { background: white; color: var(--primary-dark); box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+    
     .payment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
     .pay-btn { border: 1px solid var(--border); background: white; padding: 10px 4px; border-radius: 12px; text-align: center; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
     .pay-btn.active { border-color: var(--primary); background: #e0f7fa; color: var(--primary-dark); }
-    .btn-wa-direct { background: var(--whatsapp); color: white; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 15px; border-radius: 14px; font-weight: 800; font-size: 1rem; margin-top: 10px; text-decoration: none; border: none; width: 100%; }
-    .btn-wa-direct.disabled { background: #9ca3af; pointer-events: none; }
+    
+    .btn-wa-direct { background: var(--whatsapp); color: white; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 15px; border-radius: 14px; font-weight: 800; font-size: 1rem; margin-top: 10px; text-decoration: none; border: none; width: 100%; cursor: pointer; }
     .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f3f4f6; }
   </style>
 </head>
@@ -92,8 +97,8 @@
 
   <header>
     <div class="badge-status" id="storeStatusBadge">
-      <div class="pulse"></div>
-      <span id="storeStatusText">Aberto para Pedidos</span>
+      <div class="pulse" id="statusPulse"></div>
+      <span id="storeStatusText">Carregando status...</span>
     </div>
     <h1 class="brand-title">Dogão do Paulista</h1>
     <p class="brand-subtitle">Lanches prensados e super recheados 🌭✨</p>
@@ -130,7 +135,7 @@
     <div style="font-size: 1.15rem; font-weight: 800;" id="cartBarTotal">R$ 0,00 <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem; margin-left: 4px;"></i></div>
   </div>
 
-  <!-- MODAL ADICIONAR ITEM -->
+  <!-- MODAL PRODUTO -->
   <div class="modal-overlay" id="productModal">
     <div class="bottom-sheet">
       <div class="sheet-header">
@@ -143,7 +148,7 @@
 
       <div class="field-group">
         <label class="field-label">Observações</label>
-        <textarea id="modalProdObs" class="field-textarea" placeholder="Ex: Sem cebola, refrigerante sabor Guaraná..."></textarea>
+        <textarea id="modalProdObs" class="field-textarea" placeholder="Ex: Sem cebola, refrigerante Guaraná..."></textarea>
       </div>
 
       <div style="display: flex; align-items: center; justify-content: center; gap: 16px; margin: 16px 0;">
@@ -159,7 +164,7 @@
     </div>
   </div>
 
-  <!-- MODAL CARRINHO / WHATSAPP -->
+  <!-- MODAL CHECKOUT -->
   <div class="modal-overlay" id="cartModal">
     <div class="bottom-sheet">
       <div class="sheet-header">
@@ -233,6 +238,8 @@
 
   <script>
     const WHATSAPP_NUMBER = "5587988530881";
+    const CLOUD_URL = "https://api.npoint.io/4fa149ca71a62061266b";
+
     const MENU_DATA = [
       {
         category: "Dog Lanches",
@@ -296,71 +303,41 @@
       }
     ];
 
-    let storeConfig = {
-      mode: 'open', // 'open', 'closed', 'auto'
-      announcement: '',
-      pausedItems: {},
-      schedule: {
-        0: { enabled: true, open: "18:00", close: "23:59" },
-        1: { enabled: false, open: "18:00", close: "23:00" },
-        2: { enabled: true, open: "18:00", close: "23:00" },
-        3: { enabled: true, open: "18:00", close: "23:00" },
-        4: { enabled: true, open: "18:00", close: "23:00" },
-        5: { enabled: true, open: "18:00", close: "23:59" },
-        6: { enabled: true, open: "18:00", close: "23:59" }
-      }
-    };
-
+    let storeConfig = { mode: 'open', announcement: '' };
     let cart = [];
     let currentItem = null;
     let currentQty = 1;
     let selectedOrderType = 'delivery';
     let selectedPayment = 'PIX';
 
-    // Sincronização LocalStorage (permite testar ou sincronizar com a app de admin)
-    function loadAdminSettings() {
-      const saved = localStorage.getItem('dogao_admin_config');
-      if (saved) {
-        try { storeConfig = JSON.parse(saved); } catch(e){}
+    async function checkCloudStatus() {
+      try {
+        const res = await fetch(CLOUD_URL);
+        const data = await res.json();
+        storeConfig.mode = data.mode || 'open';
+        storeConfig.announcement = data.announcement || '';
+      } catch (err) {
+        storeConfig.mode = 'open';
       }
       applyStoreStatus();
     }
 
-    window.addEventListener('storage', (e) => {
-      if (e.key === 'dogao_admin_config') {
-        loadAdminSettings();
-      }
-    });
-
-    function isStoreCurrentlyOpen() {
-      if (storeConfig.mode === 'open') return true;
-      if (storeConfig.mode === 'closed') return false;
-      const now = new Date();
-      const day = now.getDay();
-      const sch = storeConfig.schedule[day];
-      if (!sch || !sch.enabled) return false;
-      const curM = now.getHours() * 60 + now.getMinutes();
-      const [oh, om] = sch.open.split(':').map(Number);
-      const [ch, cm] = sch.close.split(':').map(Number);
-      const oM = oh * 60 + om;
-      const cM = ch * 60 + cm;
-      if (cM < oM) return (curM >= oM || curM <= cM);
-      return (curM >= oM && curM <= cM);
-    }
-
     function applyStoreStatus() {
-      const isOpen = isStoreCurrentlyOpen();
+      const isOpen = storeConfig.mode === 'open';
       const badge = document.getElementById('storeStatusBadge');
       const badgeText = document.getElementById('storeStatusText');
+      const pulse = document.getElementById('statusPulse');
       const bannerClosed = document.getElementById('bannerClosed');
       const bannerAnnounce = document.getElementById('bannerAnnouncement');
 
       if (isOpen) {
         badge.className = 'badge-status';
+        pulse.style.display = 'block';
         badgeText.innerText = 'Aberto para Pedidos';
         bannerClosed.style.display = 'none';
       } else {
         badge.className = 'badge-status closed';
+        pulse.style.display = 'none';
         badgeText.innerText = 'Fechado no Momento';
         bannerClosed.style.display = 'block';
       }
@@ -371,15 +348,14 @@
       } else {
         bannerAnnounce.style.display = 'none';
       }
-
-      renderItems(MENU_DATA);
     }
 
     function initMenu() {
       const catBar = document.getElementById('categoriesBar');
       catBar.innerHTML = `<button class="cat-btn active" onclick="filterCategory('all', this)"><i class="fa-solid fa-border-all"></i> Todos</button>` +
         MENU_DATA.map(c => `<button class="cat-btn" onclick="filterCategory('${c.category}', this)">${c.category}</button>`).join('');
-      loadAdminSettings();
+      renderItems(MENU_DATA);
+      checkCloudStatus();
     }
 
     function renderItems(data) {
@@ -388,21 +364,18 @@
         <div class="menu-section" data-cat="${section.category}">
           <h2 class="section-title">🌭 ${section.category}</h2>
           <div class="menu-grid">
-            ${section.items.map(item => {
-              const isPaused = storeConfig.pausedItems && storeConfig.pausedItems[item.id];
-              return `
-                <div class="product-card ${isPaused ? 'esgotado' : ''}" onclick="openProductModal(${item.id})">
-                  <div>
-                    <h3 class="product-title">${item.name}</h3>
-                    <p class="product-desc">${item.desc}</p>
-                    <span class="product-price">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
-                  </div>
-                  <button class="btn-add-item" onclick="event.stopPropagation(); openProductModal(${item.id})">
-                    <i class="fa-solid fa-plus"></i>
-                  </button>
+            ${section.items.map(item => `
+              <div class="product-card" onclick="openProductModal(${item.id})">
+                <div>
+                  <h3 class="product-title">${item.name}</h3>
+                  <p class="product-desc">${item.desc}</p>
+                  <span class="product-price">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
                 </div>
-              `;
-            }).join('')}
+                <button class="btn-add-item" onclick="event.stopPropagation(); openProductModal(${item.id})">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+            `).join('')}
           </div>
         </div>
       `).join('');
@@ -427,12 +400,8 @@
     });
 
     function openProductModal(id) {
-      if (!isStoreCurrentlyOpen()) {
+      if (storeConfig.mode === 'closed') {
         alert('O estabelecimento está fechado no momento para novos pedidos.');
-        return;
-      }
-      if (storeConfig.pausedItems && storeConfig.pausedItems[id]) {
-        alert('Este item está temporariamente esgotado!');
         return;
       }
       let found = null;
@@ -450,15 +419,8 @@
       document.getElementById('productModal').classList.add('active');
     }
 
-    function closeProductModal() {
-      document.getElementById('productModal').classList.remove('active');
-    }
-
-    function changeModalQty(delta) {
-      currentQty = Math.max(1, currentQty + delta);
-      updateModalPrice();
-    }
-
+    function closeProductModal() { document.getElementById('productModal').classList.remove('active'); }
+    function changeModalQty(delta) { currentQty = Math.max(1, currentQty + delta); updateModalPrice(); }
     function updateModalPrice() {
       document.getElementById('modalProdQty').innerText = currentQty;
       const total = currentItem.price * currentQty;
@@ -483,14 +445,8 @@
       document.getElementById('cartBarTotal').innerHTML = `R$ ${totalPrice.toFixed(2).replace('.', ',')} <i class="fa-solid fa-chevron-right" style="font-size: 0.8rem; margin-left: 4px;"></i>`;
     }
 
-    function openCartModal() {
-      renderCartItems();
-      document.getElementById('cartModal').classList.add('active');
-    }
-
-    function closeCartModal() {
-      document.getElementById('cartModal').classList.remove('active');
-    }
+    function openCartModal() { renderCartItems(); document.getElementById('cartModal').classList.add('active'); }
+    function closeCartModal() { document.getElementById('cartModal').classList.remove('active'); }
 
     function renderCartItems() {
       const container = document.getElementById('cartItemsList');
@@ -593,16 +549,13 @@
     }
 
     function handleSendClick(e) {
-      if (!isStoreCurrentlyOpen()) {
+      if (storeConfig.mode === 'closed') {
         e.preventDefault();
         alert('O estabelecimento está fechado no momento para novos pedidos.');
         return false;
       }
       const text = buildCleanWhatsAppMessage();
-      if (!text) {
-        e.preventDefault();
-        return false;
-      }
+      if (!text) { e.preventDefault(); return false; }
       const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
       document.getElementById('btnSendWhatsApp').setAttribute('href', url);
       return true;
